@@ -21,10 +21,15 @@
       font-family: 'Poppins', sans-serif;
     }
     
-    /* ENHANCED PAGE BACKGROUNDS - BRIGHT! */
+    /* FIXED PAGE POSITIONING */
     .page {
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -32,10 +37,9 @@
       padding: 2rem 1.5rem;
       gap: 2rem;
       opacity: 0;
-      transform: translateX(100%) scale(0.95);
+      transform: translateX(100%);
       transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       z-index: 10;
-      position: relative;
       overflow: hidden;
     }
     
@@ -84,12 +88,12 @@
     
     .page.active {
       opacity: 1;
-      transform: translateX(0) scale(1);
+      transform: translateX(0);
     }
     
     .page.exiting {
       opacity: 0;
-      transform: translateX(-100%) scale(0.95);
+      transform: translateX(-100%);
     }
     
     /* ENHANCED PAGE NUMBER */
@@ -358,7 +362,7 @@
       50% { transform: scale(1.05); }
     }
     
-    /* Flower page styling - DON'T TOUCH */
+    /* Flower page styling */
     .flower-page {
       background: var(--dark-color) !important;
       overflow: hidden !important;
@@ -511,7 +515,7 @@
       }
     }
     
-    /* MOBILE-FIRST BOUQUET CONTAINER */
+    /* BOUQUET CONTAINER */
     .bouquet-container {
       position: absolute;
       bottom: 0;
@@ -547,7 +551,7 @@
       display: none !important;
     }
     
-    /* MOBILE-OPTIMIZED FAN ARRANGEMENT */
+    /* FLOWERS */
     .flowers {
       position: absolute;
       bottom: 18vh;
@@ -563,13 +567,11 @@
       transition: all 0.8s ease-out;
     }
     
-    /* CLOSED POSITION */
     .flowers:not(.spread) .flower {
       left: 50% !important;
       transform: translateX(-50%) scale(0.65) !important;
     }
     
-    /* SPREAD ANIMATION */
     .flowers.spread .flower {
       animation: spread-open 1.5s ease-out forwards;
     }
@@ -580,7 +582,7 @@
       }
     }
     
-    /* BACK ROW - 3 roses */
+    /* BACK ROW */
     .flower--back-1 {
       left: 50%;
       bottom: 60%;
@@ -602,7 +604,7 @@
       z-index: 1;
     }
     
-    /* MIDDLE ROW - 4 roses */
+    /* MIDDLE ROW */
     .flower--mid-1 {
       left: 12%;
       bottom: 35%;
@@ -631,7 +633,7 @@
       z-index: 2;
     }
     
-    /* FRONT ROW - 5 roses */
+    /* FRONT ROW */
     .flower--front-1 {
       left: 8%;
       bottom: 8%;
@@ -690,7 +692,6 @@
       box-shadow: inset 0 0 3px rgba(0,0,0,0.5), 0 0 10px rgba(45,122,45,0.4) !important;
     }
     
-    /* SPARKLES */
     .flower__light {
       width: 2.5vmin !important;
       height: 2.5vmin !important;
@@ -850,99 +851,12 @@
       transform: translateY(-50%) rotate(135deg);
     }
     
-    /* TABLET */
-    @media (min-width: 481px) and (max-width: 768px) {
-      .flowers {
-        bottom: 20vh;
-        height: 48vh;
-        max-width: 600px;
-      }
-      .bouquet-wrapper {
-        height: 22vh;
-        max-width: 550px;
-      }
-      .ribbon {
-        height: 42px;
-      }
-      .ribbon-bow {
-        width: 68px;
-        height: 68px;
-      }
-    }
-    
-    /* LANDSCAPE */
-    @media (max-height: 500px) and (orientation: landscape) {
-      .flower-title {
-        top: 2vh;
-        font-size: clamp(1.5rem, 6vw, 2.5rem);
-      }
-      .flowers {
-        bottom: 12vh;
-        height: 55vh;
-      }
-      .bouquet-wrapper {
-        height: 14vh;
-      }
-      .final-message {
-        padding: 1.3rem 1.5rem;
-        max-height: 70vh;
-      }
-      .final-message.move-bottom {
-        bottom: 1vh;
-        padding: 0.9rem 1.2rem;
-        max-height: 30vh;
-      }
-      .final-message h2 {
-        font-size: clamp(1.2rem, 4.5vw, 1.8rem);
-        margin-bottom: 0.6rem;
-      }
-      .final-message p {
-        font-size: clamp(0.9rem, 3.5vw, 1.1rem);
-        margin-bottom: 0.4rem;
-      }
-      
-      .photo-frame {
-        width: min(70vw, 350px);
-        height: min(70vw, 350px);
-      }
-      
-      .message-box {
-        padding: 1.3rem 1.5rem;
-      }
-    }
-    
-    /* SMALL PHONES */
+    /* RESPONSIVE */
     @media (max-width: 360px) {
-      .flowers {
-        bottom: 16vh;
-        height: 42vh;
-      }
-      .bouquet-wrapper {
-        height: 18vh;
-      }
-      .ribbon {
-        height: 30px;
-      }
-      .ribbon-bow {
-        width: 48px;
-        height: 48px;
-      }
-      .final-message {
-        padding: 1.5rem 1.3rem;
-      }
-      .final-message.move-bottom {
-        padding: 1rem 1.2rem;
-      }
-      
       .photo-frame {
         width: min(85vw, 360px);
         height: min(85vw, 360px);
       }
-      
-      .message-box {
-        padding: 1.5rem 1.5rem;
-      }
-      
       .next-btn {
         padding: 1.1rem 2.5rem;
         font-size: 0.95rem;
@@ -989,18 +903,15 @@
     <button class="next-btn special" onclick="nextPage(4)">See Your Surprise ✨</button>
   </div>
 
-  <!-- Page 4: PINK BOUQUET - DON'T TOUCH! -->
+  <!-- Page 4: FLOWERS -->
   <div class="page flower-page" id="page4">
     <div class="night"></div>
-    
-    <!-- SHOOTING STARS -->
     <div class="shooting-star shooting-star-1"></div>
     <div class="shooting-star shooting-star-2"></div>
     <div class="shooting-star shooting-star-3"></div>
     
     <h1 class="flower-title">This is for you...</h1>
     
-    <!-- MESSAGE APPEARS FIRST (CENTERED) -->
     <div class="final-message" id="finalMessage">
       <h2>This flower will never wilt...</h2>
       <p>Just like my love for you will never fade.</p>
@@ -1009,11 +920,10 @@
     
     <div class="bouquet-container" id="bouquetContainer">
       <div class="flowers" id="flowersContainer">
-        <!-- ALL FLOWERS CODE HERE - KEEPING SAME -->
-        <!-- I'll skip pasting all flowers to save space -->
+        <!-- You need to ADD YOUR FLOWERS HTML HERE from main.css file! -->
+        <!-- Copy the flowers from the flower.html or your working version! -->
       </div>
 
-      <!-- WRAPPER -->
       <div class="bouquet-wrapper">
         <div class="paper-wrap"></div>
         <div class="ribbon">
@@ -1040,7 +950,6 @@
       next.classList.add('active');
       currentPage = pageNum;
       
-      // Heart burst
       for (let i = 0; i < 30; i++) {
         setTimeout(() => {
           createHeart(
@@ -1051,7 +960,6 @@
         }, i * 20);
       }
       
-      // Show message FIRST on page 4
       if (pageNum === 4 && !bouquetShown) {
         bouquetShown = true;
         setTimeout(showMessage, 800);
@@ -1060,11 +968,7 @@
 
     function showMessage() {
       const finalMessage = document.getElementById('finalMessage');
-      
-      // Show message centered
       finalMessage.classList.add('show');
-      
-      // After 4 seconds, show flowers and move message to bottom
       setTimeout(showBouquet, 4000);
     }
 
@@ -1073,18 +977,13 @@
       const flowersContainer = document.getElementById('flowersContainer');
       const finalMessage = document.getElementById('finalMessage');
       
-      // Move message to bottom
       finalMessage.classList.add('move-bottom');
-      
-      // Show bouquet
       bouquetContainer.classList.add('show');
       
-      // SPREAD flowers after 2 seconds
       setTimeout(() => {
         flowersContainer.classList.add('spread');
       }, 2000);
       
-      // Heart explosion
       for (let i = 0; i < 150; i++) {
         setTimeout(() => {
           createHeart(
@@ -1096,10 +995,8 @@
       }
     }
 
-    // Prevent right-click
     document.addEventListener('contextmenu', e => e.preventDefault());
 
-    // Prevent zoom on double tap
     let lastTouchEnd = 0;
     document.addEventListener('touchend', (e) => {
       const now = Date.now();
@@ -1109,7 +1006,6 @@
       lastTouchEnd = now;
     }, false);
 
-    // Secret console message
     console.log('%cI love you ❤️', 'font-size: 50px; color: #ff69b4; text-shadow: 0 0 10px #ff1493;');
     console.log('%cThis website was made with love just for you 🌹', 'font-size: 20px; color: #ff69b4;');
   </script>
