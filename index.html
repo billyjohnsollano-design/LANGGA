@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For You ❤️</title>
+  <link rel="stylesheet" href="main.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;600&display=swap');
+    
+    /* Page transition system */
+    .page {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      gap: 2rem;
+      opacity: 0;
+      transform: translateX(100%) scale(0.95);
+      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      z-index: 10;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .page.active {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+    
+    .page.exiting {
+      opacity: 0;
+      transform: translateX(-100%) scale(0.95);
+    }
+    
+    .page-number {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: rgba(255,255,255,0.7);
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    
+    .photo-frame {
+      width: clamp(280px, 70vw, 420px);
+      height: clamp(280px, 70vw, 420px);
+      border-radius: 25px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+      border: 5px solid rgba(255,255,255,0.3);
+      animation: float 4s ease-in-out infinite;
+      position: relative;
+    }
+    
+    .photo-frame::before {
+      content: '';
+      position: absolute;
+      inset: -10px;
+      background: linear-gradient(45deg, #ff6b9d, #c44569, #8e44ad);
+      background-size: 300% 300%;
+      animation: borderGlow 3s ease infinite;
+      border-radius: 25px;
+      z-index: -1;
+      filter: blur(20px);
+      opacity: 0.8;
+    }
+    
+    .photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .message-box {
+      max-width: 550px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 2rem;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+    
+    .message {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(1.2rem, 4vw, 1.8rem);
+      color: white;
+      text-align: center;
+      line-height: 1.7;
+      text-shadow: 0 3px 15px rgba(0,0,0,0.5);
+    }
+    
+    .next-btn {
+      background: linear-gradient(45deg, #ff6b9d, #c44569);
+      color: white;
+      border: none;
+      padding: 1.2rem 3rem;
+      border-radius: 50px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(255,107,157,0.5);
+      transition: all 0.4s;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .next-btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(255,107,157,0.7);
+    }
+    
+    .next-btn.special {
+      background: linear-gradient(45deg, #f093fb, #f5576c);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    /* Flower page styling */
+    .flower-page {
+      background: var(--dark-color) !important;
+      overflow: hidden !important;
+      padding: 0 !important;
+    }
+    
+    /* SHOOTING STARS */
+    .shooting-star {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 8px 3px rgba(255,255,255,0.9);
+      z-index: 5;
+    }
+    
+    .shooting-star::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(to right, rgba(255,255,255,0.8), transparent);
+    }
+    
+    .shooting-star-1 {
+      top: 15%;
+      left: 10%;
+      animation: shoot-1 4s ease-out 2s infinite;
+    }
+    
+    .shooting-star-2 {
+      top: 25%;
+      right: 20%;
+      animation: shoot-2 5s ease-out 4s infinite;
+    }
+    
+    .shooting-star-3 {
+      top: 40%;
+      left: 80%;
+      animation: shoot-3 4.5s ease-out 6s infinite;
+    }
+    
+    @keyframes shoot-1 {
+      0% { transform: translate(0, 0); opacity: 1; }
+      100% { transform: translate(200px, 200px); opacity: 0; }
+    }
+    
+    @keyframes shoot-2 {
+      0% { transform: translate(0, 0); opacity: 1; }
+      100% { transform: translate(-250px, 250px); opacity: 0; }
+    }
+    
+    @keyframes shoot-3 {
+      0% { transform: translate(0, 0); opacity: 1; }
+      100% { transform: translate(-200px, 200px); opacity: 0; }
+    }
+    
+    .flower-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      color: transparent;
+      background: linear-gradient(45deg, #ff69b4, #ff1493, #dc143c);
+      background-clip: text;
+      -webkit-background-clip: text;
+      text-shadow: 0 0 40px rgba(255,105,180,0.8);
+      animation: titlePulse 3s ease-in-out infinite;
+      font-weight: 700;
+      z-index: 100;
+      position: absolute;
+      top: 4vh;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      width: 90%;
+    }
+    
+    .flower-subtitle {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(1.1rem, 4vw, 1.6rem);
+      color: rgba(255,255,255,0.9);
+      z-index: 100;
+      position: absolute;
+      top: calc(4vh + 5rem);
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      width: 90%;
+    }
+    
+    .final-message {
+      position: fixed;
+      bottom: 3vh;
+      left: 50%;
+      transform: translateX(-50%) translateY(30px);
+      text-align: center;
+      max-width: 90%;
+      width: 650px;
+      opacity: 0;
+      transition: all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      z-index: 100;
+      padding: 1.5rem 2rem;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      border: 2px solid rgba(255,105,180,0.3);
+      box-shadow: 0 10px 50px rgba(0,0,0,0.8);
+    }
+    
+    .final-message.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    
+    .final-message h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      color: #ff69b4;
+      margin-bottom: 0.8rem;
+      text-shadow: 0 0 20px rgba(255,105,180,0.8);
+    }
+    
+    .final-message p {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(1rem, 3.5vw, 1.3rem);
+      color: rgba(255,255,255,0.95);
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+    
+    .signature {
+      font-style: italic;
+      color: #ff69b4 !important;
+      font-size: clamp(1.2rem, 4vw, 1.6rem) !important;
+      margin-top: 0.8rem !important;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    @keyframes borderGlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    @keyframes titlePulse {
+      0%, 100% { 
+        transform: translateX(-50%) scale(1);
+        text-shadow: 0 0 40px rgba(255,105,180,0.8);
+      }
+      50% { 
+        transform: translateX(-50%) scale(1.03);
+        text-shadow: 0 0 60px rgba(255,105,180,1), 0 0 80px rgba(255,20,147,0.8);
+      }
+    }
+    
+    /* BOUQUET CONTAINER */
+    .bouquet-container {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      display: none;
+      width: 100%;
+      height: 100vh;
+    }
+    
+    .bouquet-container.show {
+      display: block;
+      animation: bouquet-glow 2s ease-out 6.5s forwards;
+    }
+    
+    @keyframes bouquet-glow {
+      0% {
+        filter: drop-shadow(0 0 0px rgba(255,105,180,0));
+      }
+      100% {
+        filter: drop-shadow(0 0 50px rgba(255,105,180,0.9)) drop-shadow(0 0 100px rgba(220,20,60,0.7));
+      }
+    }
+    
+    /* REMOVE GRASS - CLEAN BOUQUET */
+    .flower__grass,
+    .growing-grass,
+    .flower__g-right,
+    .flower__g-front,
+    .flower__g-fr,
+    .long-g,
+    .grow-ans {
+      display: none !important;
+    }
+    
+    /* FAN/SPREAD ARRANGEMENT - OPENS LIKE LEAVES */
+    .flowers {
+      position: absolute;
+      bottom: 180px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 400px;
+    }
+    
+    .flower {
+      position: absolute;
+      transition: all 0.8s ease-out;
+    }
+    
+    /* CLOSED POSITION (initial) */
+    .flowers:not(.spread) .flower {
+      left: 50% !important;
+      transform: translateX(-50%) scale(0.8) !important;
+    }
+    
+    /* SPREAD OPEN ANIMATION - FAN SHAPE */
+    .flowers.spread .flower {
+      animation: spread-open 1.5s ease-out forwards;
+    }
+    
+    @keyframes spread-open {
+      from {
+        transform: translateX(-50%) scale(0.8);
+      }
+    }
+    
+    /* BACK ROW - 3 roses (highest, spread wide) */
+    .flower--back-1 {
+      left: 50%;
+      bottom: 200px;
+      transform: translateX(-50%) scale(0.75);
+      z-index: 1;
+    }
+    
+    .flower--back-2 {
+      left: 25%;
+      bottom: 180px;
+      transform: translateX(-50%) scale(0.7) rotate(-15deg);
+      z-index: 1;
+    }
+    
+    .flower--back-3 {
+      left: 75%;
+      bottom: 180px;
+      transform: translateX(-50%) scale(0.7) rotate(15deg);
+      z-index: 1;
+    }
+    
+    /* MIDDLE ROW - 4 roses (medium spread) */
+    .flower--mid-1 {
+      left: 20%;
+      bottom: 100px;
+      transform: translateX(-50%) scale(0.8) rotate(-10deg);
+      z-index: 2;
+    }
+    
+    .flower--mid-2 {
+      left: 40%;
+      bottom: 120px;
+      transform: translateX(-50%) scale(0.85) rotate(-5deg);
+      z-index: 2;
+    }
+    
+    .flower--mid-3 {
+      left: 60%;
+      bottom: 120px;
+      transform: translateX(-50%) scale(0.85) rotate(5deg);
+      z-index: 2;
+    }
+    
+    .flower--mid-4 {
+      left: 80%;
+      bottom: 100px;
+      transform: translateX(-50%) scale(0.8) rotate(10deg);
+      z-index: 2;
+    }
+    
+    /* FRONT ROW - 5 roses (tight at bottom, tallest) */
+    .flower--front-1 {
+      left: 15%;
+      bottom: 20px;
+      transform: translateX(-50%) scale(0.9) rotate(-12deg);
+      z-index: 3;
+    }
+    
+    .flower--front-2 {
+      left: 35%;
+      bottom: 40px;
+      transform: translateX(-50%) scale(0.95) rotate(-5deg);
+      z-index: 3;
+    }
+    
+    .flower--front-3 {
+      left: 50%;
+      bottom: 50px;
+      transform: translateX(-50%) scale(1);
+      z-index: 3;
+    }
+    
+    .flower--front-4 {
+      left: 65%;
+      bottom: 40px;
+      transform: translateX(-50%) scale(0.95) rotate(5deg);
+      z-index: 3;
+    }
+    
+    .flower--front-5 {
+      left: 85%;
+      bottom: 20px;
+      transform: translateX(-50%) scale(0.9) rotate(12deg);
+      z-index: 3;
+    }
+    
+    /* ROSE COLORS - RED/PINK GRADIENT */
+    .flower__leaf {
+      background-color: #dc143c !important;
+      background-image: linear-gradient(to top, #8b0000, #dc143c, #ff1493, #ff69b4) !important;
+      box-shadow: inset 0 0 3vmin rgba(255,255,255,0.3), 0 0 2vmin rgba(220,20,60,0.8) !important;
+    }
+    
+    .flower__leafs::after {
+      background-color: #dc143c !important;
+      filter: blur(12vmin) !important;
+    }
+    
+    .flower__white-circle {
+      background-color: #ffeb3b !important;
+      box-shadow: 0 0 20px rgba(255,235,59,0.9) !important;
+    }
+    
+    .flower__line {
+      background-image: linear-gradient(to left, rgba(0,0,0,0.3), transparent, rgba(255,255,255,0.2)),
+                        linear-gradient(to top, transparent 10%, #1a4d1a, #2d7a2d, #3da03d) !important;
+      box-shadow: inset 0 0 3px rgba(0,0,0,0.5), 0 0 10px rgba(45,122,45,0.4) !important;
+    }
+    
+    /* SPARKLES - BIGGER & BRIGHTER */
+    .flower__light {
+      width: 2vmin !important;
+      height: 2vmin !important;
+      box-shadow: 0 0 25px currentColor, 0 0 50px currentColor, 0 0 75px currentColor !important;
+      filter: blur(0.5vmin) !important;
+    }
+    
+    .flower__light:nth-child(odd) {
+      background-color: #ff69b4 !important;
+    }
+    
+    .flower__light:nth-child(even) {
+      background-color: #ffeb3b !important;
+    }
+    
+    /* BOUQUET WRAPPER */
+    .bouquet-wrapper {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 550px;
+      height: 280px;
+      opacity: 0;
+      animation: show-wrapper 1s ease-out 5s forwards;
+      z-index: 5;
+    }
+    
+    @keyframes show-wrapper {
+      to { opacity: 1; }
+    }
+    
+    /* KRAFT PAPER WRAP */
+    .paper-wrap {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 480px;
+      height: 240px;
+      background: 
+        repeating-linear-gradient(
+          90deg,
+          #d4b896,
+          #d4b896 10px,
+          #c9ad86 10px,
+          #c9ad86 20px
+        ),
+        linear-gradient(135deg, #e8d4ba, #d4b896, #c9ad86);
+      clip-path: polygon(15% 100%, 25% 0%, 75% 0%, 85% 100%);
+      box-shadow: 
+        inset 15px 0 25px rgba(0,0,0,0.15),
+        inset -15px 0 25px rgba(0,0,0,0.15),
+        0 10px 40px rgba(0,0,0,0.4);
+      border: 2px solid #b8a07a;
+    }
+    
+    .paper-wrap::before {
+      content: '';
+      position: absolute;
+      top: 5%;
+      left: 5%;
+      right: 5%;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 15px,
+        rgba(255,255,255,0.08) 15px,
+        rgba(255,255,255,0.08) 30px
+      );
+    }
+    
+    /* RED SATIN RIBBON */
+    .ribbon {
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 420px;
+      height: 50px;
+      background: linear-gradient(to right, 
+        #a01729 0%, 
+        #c41e3a 20%, 
+        #e63946 50%, 
+        #c41e3a 80%, 
+        #a01729 100%
+      );
+      box-shadow: 
+        0 4px 20px rgba(196,30,58,0.7),
+        inset 0 2px 4px rgba(255,255,255,0.3),
+        inset 0 -2px 4px rgba(0,0,0,0.3);
+      border-radius: 8px;
+    }
+    
+    .ribbon::before,
+    .ribbon::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      width: 0;
+      height: 0;
+      border-style: solid;
+    }
+    
+    .ribbon::before {
+      left: -10px;
+      border-width: 40px 35px 0 0;
+      border-color: #a01729 transparent transparent transparent;
+      filter: drop-shadow(0 3px 8px rgba(0,0,0,0.4));
+    }
+    
+    .ribbon::after {
+      right: -10px;
+      border-width: 40px 0 0 35px;
+      border-color: #a01729 transparent transparent transparent;
+      filter: drop-shadow(0 3px 8px rgba(0,0,0,0.4));
+    }
+    
+    .ribbon-bow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle, #e63946, #c41e3a, #a01729);
+      border-radius: 50%;
+      box-shadow: 
+        0 0 30px rgba(196,30,58,0.9),
+        inset 0 3px 6px rgba(255,255,255,0.3),
+        inset 0 -3px 6px rgba(0,0,0,0.3);
+    }
+    
+    .ribbon-bow::before,
+    .ribbon-bow::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 50px;
+      height: 40px;
+      background: linear-gradient(135deg, #e63946, #c41e3a);
+      border-radius: 50% 50% 50% 0;
+      box-shadow: 
+        inset 2px 2px 4px rgba(255,255,255,0.3),
+        inset -2px -2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .ribbon-bow::before {
+      right: 100%;
+      transform: translateY(-50%) rotate(-45deg);
+    }
+    
+    .ribbon-bow::after {
+      left: 100%;
+      transform: translateY(-50%) rotate(135deg);
+    }
+    
+    .ribbon-bow-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 36px;
+      z-index: 10;
+    }
+    
+    @media (max-width: 768px) {
+      .flowers { width: 550px; height: 320px; bottom: 140px; }
+      .bouquet-wrapper { width: 440px; height: 220px; }
+      .paper-wrap { width: 380px; height: 190px; }
+      .ribbon { width: 330px; bottom: 80px; height: 40px; }
+      .ribbon-bow { width: 65px; height: 65px; }
+      .ribbon-bow-center { font-size: 28px; }
+    }
+    
+    @media (max-width: 480px) {
+      .page { padding: 1.5rem; gap: 1.5rem; }
+      .message-box { padding: 1.5rem; }
+      .next-btn { padding: 1rem 2rem; font-size: 1.1rem; }
+      .final-message { 
+        bottom: 2vh; 
+        padding: 1.2rem 1.5rem;
+        max-width: 95%;
+      }
+      .flowers { width: 420px; height: 240px; bottom: 110px; }
+      .bouquet-wrapper { width: 330px; height: 165px; }
+      .paper-wrap { width: 280px; height: 140px; }
+      .ribbon { width: 250px; bottom: 60px; height: 35px; }
+      .ribbon-bow { width: 55px; height: 55px; }
+      .ribbon-bow-center { font-size: 24px; }
+    }
+    
+    @media (max-height: 700px) {
+      .flower-title { top: 2vh; font-size: clamp(2rem, 6vw, 3.5rem); }
+      .flower-subtitle { top: calc(2vh + 4rem); font-size: clamp(1rem, 3.5vw, 1.4rem); }
+      .final-message { 
+        bottom: 1vh;
+        padding: 1rem 1.5rem;
+      }
+      .final-message h2 { font-size: clamp(1.3rem, 4vw, 2rem); }
+      .final-message p { font-size: clamp(0.9rem, 3vw, 1.1rem); }
+      .flowers { width: 480px; height: 270px; bottom: 120px; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="hearts"></canvas>
+  
+  <!-- Page 1 -->
+  <div class="page active" id="page1">
+    <div class="page-number">1/5</div>
+    <div class="photo-frame">
+      <img src="photo1.jpg" alt="Our first moment" class="photo">
+    </div>
+    <div class="message-box">
+      <p class="message">Remember this day? This was when I knew you were special. ✨</p>
+    </div>
+    <button class="next-btn" onclick="nextPage(2)">Next →</button>
+  </div>
+
+  <!-- Page 2 -->
+  <div class="page" id="page2">
+    <div class="page-number">2/5</div>
+    <div class="photo-frame">
+      <img src="photo2.jpg" alt="Our second moment" class="photo">
+    </div>
+    <div class="message-box">
+      <p class="message">Every moment with you feels like magic. You make everything better. 💫</p>
+    </div>
+    <button class="next-btn" onclick="nextPage(3)">Next →</button>
+  </div>
+
+  <!-- Page 3 -->
+  <div class="page" id="page3">
+    <div class="page-number">3/5</div>
+    <div class="photo-frame">
+      <img src="photo3.jpg" alt="Our third moment" class="photo">
+    </div>
+    <div class="message-box">
+      <p class="message">You make me smile even on the hardest days. I'm so grateful for you. 🌟</p>
+    </div>
+    <button class="next-btn" onclick="nextPage(4)">Next →</button>
+  </div>
+
+  <!-- Page 4 -->
+  <div class="page" id="page4">
+    <div class="page-number">4/5</div>
+    <div class="photo-frame">
+      <img src="photo4.jpg" alt="Our fourth moment" class="photo">
+    </div>
+    <div class="message-box">
+      <p class="message">I'm so lucky to have you in my life. You mean everything to me. 💖</p>
+    </div>
+    <button class="next-btn special" onclick="nextPage(5)">See Your Surprise ✨</button>
+  </div>
+
+  <!-- Page 5: ORGANIZED ROSE BOUQUET WITH SPREAD -->
+  <div class="page flower-page" id="page5">
+    <div class="night"></div>
+    
+    <!-- SHOOTING STARS -->
+    <div class="shooting-star shooting-star-1"></div>
+    <div class="shooting-star shooting-star-2"></div>
+    <div class="shooting-star shooting-star-3"></div>
+    
+    <h1 class="flower-title">This is for you...</h1>
+    <p class="flower-subtitle">Your eternal bouquet 💐</p>
+    
+    <div class="bouquet-container" id="bouquetContainer">
+      <div class="flowers" id="flowersContainer">
+        <!-- BACK ROW - 3 roses -->
+        <div class="flower flower--back-1">
+          <div class="flower__leafs flower__leafs--1">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+            <div class="flower__light flower__light--1"></div>
+            <div class="flower__light flower__light--2"></div>
+            <div class="flower__light flower__light--3"></div>
+            <div class="flower__light flower__light--4"></div>
+            <div class="flower__light flower__light--5"></div>
+            <div class="flower__light flower__light--6"></div>
+            <div class="flower__light flower__light--7"></div>
+            <div class="flower__light flower__light--8"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+            <div class="flower__line__leaf flower__line__leaf--4"></div>
+            <div class="flower__line__leaf flower__line__leaf--5"></div>
+            <div class="flower__line__leaf flower__line__leaf--6"></div>
+          </div>
+        </div>
+
+        <div class="flower flower--back-2">
+          <div class="flower__leafs flower__leafs--2">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+            <div class="flower__light flower__light--1"></div>
+            <div class="flower__light flower__light--2"></div>
+            <div class="flower__light flower__light--3"></div>
+            <div class="flower__light flower__light--4"></div>
+            <div class="flower__light flower__light--5"></div>
+            <div class="flower__light flower__light--6"></div>
+            <div class="flower__light flower__light--7"></div>
+            <div class="flower__light flower__light--8"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+            <div class="flower__line__leaf flower__line__leaf--4"></div>
+          </div>
+        </div>
+
+        <div class="flower flower--back-3">
+          <div class="flower__leafs flower__leafs--3">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+            <div class="flower__light flower__light--1"></div>
+            <div class="flower__light flower__light--2"></div>
+            <div class="flower__light flower__light--3"></div>
+            <div class="flower__light flower__light--4"></div>
+            <div class="flower__light flower__light--5"></div>
+            <div class="flower__light flower__light--6"></div>
+            <div class="flower__light flower__light--7"></div>
+            <div class="flower__light flower__light--8"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+            <div class="flower__line__leaf flower__line__leaf--4"></div>
+          </div>
+        </div>
+
+        <!-- MIDDLE ROW - 4 roses -->
+        <div class="flower flower--mid-1">
+          <div class="flower__leafs flower__leafs--1">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+            <div class="flower__light flower__light--1"></div>
+            <div class="flower__light flower__light--2"></div>
+            <div class="flower__light flower__light--3"></div>
+            <div class="flower__light flower__light--4"></div>
+            <div class="flower__light flower__light--5"></div>
+            <div class="flower__light flower__light--6"></div>
+            <div class="flower__light flower__light--7"></div>
+            <div class="flower__light flower__light--8"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+            <div class="flower__line__leaf flower__line__leaf--4"></div>
+          </div>
+        </div>
+
+        <div class="flower flower--mid-2">
+          <div class="flower__leafs flower__leafs--2">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+            <div class="flower__light flower__light--1"></div>
+            <div class="flower__light flower__light--2"></div>
+            <div class="flower__light flower__light--3"></div>
+            <div class="flower__light flower__light--4"></div>
+            <div class="flower__light flower__light--5"></div>
+            <div class="flower__light flower__light--6"></div>
+            <div class="flower__light flower__light--7"></div>
+            <div class="flower__light flower__light--8"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+            <div class="flower__line__leaf flower__line__leaf--4"></div>
+          </div>
+        </div>
+
+        <div class="flower flower--mid-3">
+          <div class="flower__leafs flower__leafs--3">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+            <div class="flower__light flower__light--1"></div>
+            <div class="flower__light flower__light--2"></div>
+            <div class="flower__light flower__light--3"></div>
+            <div class="flower__light flower__light--4"></div>
+            <div class="flower__light flower__light--5"></div>
+            <div class="flower__light flower__light--6"></div>
+            <div class="flower__light flower__light--7"></div>
+            <div class="flower__light flower__light--8"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+            <div class="flower__line__leaf flower__line__leaf--4"></div>
+          </div>
+        </div>
+
+        <div class="flower flower--mid-4">
+          <div class="flower__leafs flower__leafs--1">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+            <div class="flower__light flower__light--1"></div>
+            <div class="flower__light flower__light--2"></div>
+            <div class="flower__light flower__light--3"></div>
+            <div class="flower__light flower__light--4"></div>
+            <div class="flower__light flower__light--5"></div>
+            <div class="flower__light flower__light--6"></div>
+            <div class="flower__light flower__light--7"></div>
+            <div class="flower__light flower__light--8"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+            <div class="flower__line__leaf flower__line__leaf--4"></div>
+          </div>
+        </div>
+
+        <!-- FRONT ROW - 5 roses -->
+        <div class="flower flower--front-1">
+          <div class="flower__leafs flower__leafs--2">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+            <div class="flower__light flower__light--1"></div>
+            <div class="flower__light flower__light--2"></div>
+            <div class="flower__light flower__light--3"></div>
+            <div class="flower__light flower__light--4"></div>
+            <div class="flower__light flower__light--5"></div>
+            <div class="flower__light flower__light--6"></div>
+            <div class="flower__light flower__light--7"></div>
+            <div class="flower__light flower__light--8"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+            <div class="flower__line__leaf flower__line__leaf--4"></div>
+          </div>
+        </div>
+
+        <div class="flower flower--front-2">
+          <div class="flower__leafs flower__leafs--3">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+            <div class="flower__light flower__light--1"></div>
+            <div class="flower__light flower__light--2"></div>
+            <div class="flower__light flower__light--3"></div>
+            <div class="flower__light flower__light--4"></div>
+            <div class="flower__light flower__light--5"></div>
+            <div class="flower__light flower__light--6"></div>
+            <div class="flower__light flower__light--7"></div>
+            <div class="flower__light flower__light--8"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+            <div class="flower__line__leaf flower__line__leaf--4"></div>
+          </div>
+        </div>
+
+        <div class="flower flower--front-3">
+          <div class="flower__leafs flower__leafs--1">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+            <div class="flower__light flower__light--1"></div>
+            <div class="flower__light flower__light--2"></div>
+            <div class="flower__light flower__light--3"></div>
+            <div class="flower__light flower__light--4"></div>
+            <div class="flower__light flower__light--5"></div>
+            <div class="flower__light flower__light--6"></div>
+            <div class="flower__light flower__light--7"></div>
+            <div class="flower__light flower__light--8"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+            <div class="flower__line__leaf flower__line__leaf--4"></div>
+            <div class="flower__line__leaf flower__line__leaf--5"></div>
+            <div class="flower__line__leaf flower__line__leaf--6"></div>
+          </div>
+        </div>
+
+        <div class="flower flower--front-4">
+          <div class="flower__leafs flower__leafs--2">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+            <div class="flower__light flower__light--1"></div>
+            <div class="flower__light flower__light--2"></div>
+            <div class="flower__light flower__light--3"></div>
+            <div class="flower__light flower__light--4"></div>
+            <div class="flower__light flower__light--5"></div>
+            <div class="flower__light flower__light--6"></div>
+            <div class="flower__light flower__light--7"></div>
+            <div class="flower__light flower__light--8"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+            <div class="flower__line__leaf flower__line__leaf--4"></div>
+          </div>
+        </div>
+
+        <div class="flower flower--front-5">
+          <div class="flower__leafs flower__leafs--3">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+            <div class="flower__light flower__light--1"></div>
+            <div class="flower__light flower__light--2"></div>
+            <div class="flower__light flower__light--3"></div>
+            <div class="flower__light flower__light--4"></div>
+            <div class="flower__light flower__light--5"></div>
+            <div class="flower__light flower__light--6"></div>
+            <div class="flower__light flower__light--7"></div>
+            <div class="flower__light flower__light--8"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+            <div class="flower__line__leaf flower__line__leaf--4"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOUQUET WRAPPER -->
+      <div class="bouquet-wrapper">
+        <div class="paper-wrap"></div>
+        <div class="ribbon">
+          <div class="ribbon-bow">
+            <div class="ribbon-bow-center">💝</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="final-message" id="finalMessage">
+      <h2>This bouquet will never wilt...</h2>
+      <p>Just like my love for you will never fade.</p>
+      <p class="signature">Happy Valentine's Day, my love ❤️</p>
+      <p>I wish I could buy you a real bouquet, but I hope this one stays in your heart forever 💐</p>
+    </div>
+  </div>
+
+  <script src="hearts.js"></script>
+  <script>
+    let currentPage = 1;
+    let bouquetShown = false;
+
+    function nextPage(pageNum) {
+      const current = document.getElementById(`page${currentPage}`);
+      const next = document.getElementById(`page${pageNum}`);
+      
+      current.classList.add('exiting');
+      setTimeout(() => {
+        current.classList.remove('active', 'exiting');
+      }, 800);
+      
+      next.classList.add('active');
+      currentPage = pageNum;
+      
+      // Heart burst
+      for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+          createHeart(
+            Math.random() * canvas.width,
+            Math.random() * canvas.height,
+            true
+          );
+        }, i * 20);
+      }
+      
+      // Show bouquet on page 5 with delay
+      if (pageNum === 5 && !bouquetShown) {
+        bouquetShown = true;
+        setTimeout(showBouquet, 1500);
+      }
+    }
+
+    function showBouquet() {
+      const bouquetContainer = document.getElementById('bouquetContainer');
+      const flowersContainer = document.getElementById('flowersContainer');
+      const finalMessage = document.getElementById('finalMessage');
+      
+      bouquetContainer.classList.add('show');
+      
+      // SPREAD ANIMATION - Opens like leaves after 2 seconds
+      setTimeout(() => {
+        flowersContainer.classList.add('spread');
+      }, 2000);
+      
+      // MASSIVE heart explosion
+      for (let i = 0; i < 200; i++) {
+        setTimeout(() => {
+          createHeart(
+            canvas.width / 2 + (Math.random() - 0.5) * 300,
+            canvas.height / 2 + (Math.random() - 0.5) * 300,
+            true
+          );
+        }, i * 20);
+      }
+      
+      // Show final message
+      setTimeout(() => {
+        finalMessage.classList.add('show');
+      }, 10000);
+    }
+
+    // Prevent right-click
+    document.addEventListener('contextmenu', e => e.preventDefault());
+
+    // Secret console message
+    console.log('%cI love you ❤️', 'font-size: 50px; color: #ff69b4; text-shadow: 0 0 10px #ff1493;');
+    console.log('%cThis website was made with love just for you 🌹', 'font-size: 20px; color: #ff69b4;');
+  </script>
+</body>
+</html>
