@@ -295,7 +295,7 @@
       }
     }
     
-    /* MOBILE-FIRST BOUQUET CONTAINER */
+    /* HAND-HELD BOUQUET - STEMS TOGETHER AT BOTTOM */
     .bouquet-container {
       position: absolute;
       bottom: 0;
@@ -331,14 +331,14 @@
       display: none !important;
     }
     
-    /* MOBILE-OPTIMIZED FAN ARRANGEMENT */
+    /* STEMS CONVERGE AT BOTTOM - FLOWERS SPREAD AT TOP */
     .flowers {
       position: absolute;
-      bottom: 18vh;
+      bottom: 5vh;
       left: 50%;
       transform: translateX(-50%);
       width: 95vw;
-      height: 45vh;
+      height: 65vh;
       max-width: 500px;
     }
     
@@ -347,108 +347,196 @@
       transition: all 0.8s ease-out;
     }
     
-    /* CLOSED POSITION */
+    /* ALL STEMS START AT SAME POINT (BOTTOM CENTER) */
     .flowers:not(.spread) .flower {
       left: 50% !important;
-      transform: translateX(-50%) scale(0.65) !important;
+      bottom: 0 !important;
+      transform: translateX(-50%) scale(0.5) !important;
     }
     
-    /* SPREAD ANIMATION */
+    /* SPREAD ANIMATION - STEMS STAY TOGETHER, FLOWERS FAN OUT */
     .flowers.spread .flower {
       animation: spread-open 1.5s ease-out forwards;
     }
     
     @keyframes spread-open {
       from {
-        transform: translateX(-50%) scale(0.65);
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%) scale(0.5);
       }
     }
     
-    /* BACK ROW - 3 roses */
+    /* STEMS POINT TO BOTTOM CENTER - FLOWERS SPREAD LIKE FAN */
+    /* BACK ROW - highest/longest stems */
     .flower--back-1 {
       left: 50%;
-      bottom: 60%;
-      transform: translateX(-50%) scale(0.6);
+      bottom: 0;
+      transform: translateX(-50%) scale(0.65) rotate(0deg);
+      transform-origin: bottom center;
       z-index: 1;
+    }
+    
+    .flowers.spread .flower--back-1 {
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) translateY(-45vh) scale(0.65);
     }
     
     .flower--back-2 {
-      left: 20%;
-      bottom: 55%;
-      transform: translateX(-50%) scale(0.55) rotate(-12deg);
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) scale(0.6) rotate(-15deg);
+      transform-origin: bottom center;
       z-index: 1;
+    }
+    
+    .flowers.spread .flower--back-2 {
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) translateX(-30vw) translateY(-40vh) scale(0.6) rotate(-15deg);
     }
     
     .flower--back-3 {
-      left: 80%;
-      bottom: 55%;
-      transform: translateX(-50%) scale(0.55) rotate(12deg);
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) scale(0.6) rotate(15deg);
+      transform-origin: bottom center;
       z-index: 1;
     }
     
-    /* MIDDLE ROW - 4 roses */
+    .flowers.spread .flower--back-3 {
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) translateX(30vw) translateY(-40vh) scale(0.6) rotate(15deg);
+    }
+    
+    /* MIDDLE ROW - medium stems */
     .flower--mid-1 {
-      left: 12%;
-      bottom: 35%;
-      transform: translateX(-50%) scale(0.65) rotate(-10deg);
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) scale(0.7) rotate(-12deg);
+      transform-origin: bottom center;
       z-index: 2;
+    }
+    
+    .flowers.spread .flower--mid-1 {
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) translateX(-38vw) translateY(-35vh) scale(0.7) rotate(-12deg);
     }
     
     .flower--mid-2 {
-      left: 38%;
-      bottom: 42%;
-      transform: translateX(-50%) scale(0.7) rotate(-4deg);
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) scale(0.72) rotate(-6deg);
+      transform-origin: bottom center;
       z-index: 2;
+    }
+    
+    .flowers.spread .flower--mid-2 {
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) translateX(-18vw) translateY(-38vh) scale(0.72) rotate(-6deg);
     }
     
     .flower--mid-3 {
-      left: 62%;
-      bottom: 42%;
-      transform: translateX(-50%) scale(0.7) rotate(4deg);
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) scale(0.72) rotate(6deg);
+      transform-origin: bottom center;
       z-index: 2;
+    }
+    
+    .flowers.spread .flower--mid-3 {
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) translateX(18vw) translateY(-38vh) scale(0.72) rotate(6deg);
     }
     
     .flower--mid-4 {
-      left: 88%;
-      bottom: 35%;
-      transform: translateX(-50%) scale(0.65) rotate(10deg);
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) scale(0.7) rotate(12deg);
+      transform-origin: bottom center;
       z-index: 2;
     }
     
-    /* FRONT ROW - 5 roses */
+    .flowers.spread .flower--mid-4 {
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) translateX(38vw) translateY(-35vh) scale(0.7) rotate(12deg);
+    }
+    
+    /* FRONT ROW - shorter stems, closest */
     .flower--front-1 {
-      left: 8%;
-      bottom: 8%;
-      transform: translateX(-50%) scale(0.75) rotate(-14deg);
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) scale(0.78) rotate(-18deg);
+      transform-origin: bottom center;
       z-index: 3;
     }
     
+    .flowers.spread .flower--front-1 {
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) translateX(-42vw) translateY(-28vh) scale(0.78) rotate(-18deg);
+    }
+    
     .flower--front-2 {
-      left: 32%;
-      bottom: 15%;
-      transform: translateX(-50%) scale(0.8) rotate(-5deg);
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) scale(0.82) rotate(-8deg);
+      transform-origin: bottom center;
       z-index: 3;
+    }
+    
+    .flowers.spread .flower--front-2 {
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) translateX(-20vw) translateY(-32vh) scale(0.82) rotate(-8deg);
     }
     
     .flower--front-3 {
       left: 50%;
-      bottom: 18%;
+      bottom: 0;
       transform: translateX(-50%) scale(0.85);
+      transform-origin: bottom center;
       z-index: 3;
+    }
+    
+    .flowers.spread .flower--front-3 {
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) translateY(-35vh) scale(0.85);
     }
     
     .flower--front-4 {
-      left: 68%;
-      bottom: 15%;
-      transform: translateX(-50%) scale(0.8) rotate(5deg);
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) scale(0.82) rotate(8deg);
+      transform-origin: bottom center;
       z-index: 3;
     }
     
+    .flowers.spread .flower--front-4 {
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) translateX(20vw) translateY(-32vh) scale(0.82) rotate(8deg);
+    }
+    
     .flower--front-5 {
-      left: 92%;
-      bottom: 8%;
-      transform: translateX(-50%) scale(0.75) rotate(14deg);
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) scale(0.78) rotate(18deg);
+      transform-origin: bottom center;
       z-index: 3;
+    }
+    
+    .flowers.spread .flower--front-5 {
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%) translateX(42vw) translateY(-28vh) scale(0.78) rotate(18deg);
     }
     
     /* ROSE COLORS */
@@ -474,7 +562,7 @@
       box-shadow: inset 0 0 3px rgba(0,0,0,0.5), 0 0 10px rgba(45,122,45,0.4) !important;
     }
     
-    /* MOBILE-OPTIMIZED SPARKLES */
+    /* SPARKLES */
     .flower__light {
       width: 2.5vmin !important;
       height: 2.5vmin !important;
@@ -490,183 +578,16 @@
       background-color: #ffeb3b !important;
     }
     
-    /* MOBILE WRAPPER */
-    .bouquet-wrapper {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90vw;
-      max-width: 450px;
-      height: 20vh;
-      opacity: 0;
-      animation: show-wrapper 1s ease-out 5s forwards;
-      z-index: 5;
-    }
-    
-    @keyframes show-wrapper {
-      to { opacity: 1; }
-    }
-    
-    /* KRAFT PAPER */
-    .paper-wrap {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      height: 85%;
-      background: 
-        repeating-linear-gradient(
-          90deg,
-          #d4b896,
-          #d4b896 8px,
-          #c9ad86 8px,
-          #c9ad86 16px
-        ),
-        linear-gradient(135deg, #e8d4ba, #d4b896, #c9ad86);
-      clip-path: polygon(18% 100%, 28% 0%, 72% 0%, 82% 100%);
-      box-shadow: 
-        inset 12px 0 20px rgba(0,0,0,0.15),
-        inset -12px 0 20px rgba(0,0,0,0.15),
-        0 8px 30px rgba(0,0,0,0.4);
-      border: 2px solid #b8a07a;
-    }
-    
-    .paper-wrap::before {
-      content: '';
-      position: absolute;
-      top: 5%;
-      left: 5%;
-      right: 5%;
-      bottom: 0;
-      background: repeating-linear-gradient(
-        -45deg,
-        transparent,
-        transparent 12px,
-        rgba(255,255,255,0.08) 12px,
-        rgba(255,255,255,0.08) 24px
-      );
-    }
-    
-    /* RIBBON */
-    .ribbon {
-      position: absolute;
-      bottom: 45%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 85%;
-      height: 35px;
-      background: linear-gradient(to right, 
-        #a01729 0%, 
-        #c41e3a 20%, 
-        #e63946 50%, 
-        #c41e3a 80%, 
-        #a01729 100%
-      );
-      box-shadow: 
-        0 3px 15px rgba(196,30,58,0.7),
-        inset 0 2px 3px rgba(255,255,255,0.3),
-        inset 0 -2px 3px rgba(0,0,0,0.3);
-      border-radius: 6px;
-    }
-    
-    .ribbon::before,
-    .ribbon::after {
-      content: '';
-      position: absolute;
-      top: 100%;
-      width: 0;
-      height: 0;
-      border-style: solid;
-    }
-    
-    .ribbon::before {
-      left: -8px;
-      border-width: 30px 25px 0 0;
-      border-color: #a01729 transparent transparent transparent;
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
-    }
-    
-    .ribbon::after {
-      right: -8px;
-      border-width: 30px 0 0 25px;
-      border-color: #a01729 transparent transparent transparent;
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
-    }
-    
-    .ribbon-bow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 55px;
-      height: 55px;
-      background: radial-gradient(circle, #e63946, #c41e3a, #a01729);
-      border-radius: 50%;
-      box-shadow: 
-        0 0 25px rgba(196,30,58,0.9),
-        inset 0 2px 5px rgba(255,255,255,0.3),
-        inset 0 -2px 5px rgba(0,0,0,0.3);
-    }
-    
-    .ribbon-bow::before,
-    .ribbon-bow::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      width: 38px;
-      height: 30px;
-      background: linear-gradient(135deg, #e63946, #c41e3a);
-      border-radius: 50% 50% 50% 0;
-      box-shadow: 
-        inset 2px 2px 3px rgba(255,255,255,0.3),
-        inset -2px -2px 3px rgba(0,0,0,0.2);
-    }
-    
-    .ribbon-bow::before {
-      right: 100%;
-      transform: translateY(-50%) rotate(-45deg);
-    }
-    
-    .ribbon-bow::after {
-      left: 100%;
-      transform: translateY(-50%) rotate(135deg);
-    }
-    
-    .ribbon-bow-center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 28px;
-      z-index: 10;
-    }
-    
-    /* TABLET OPTIMIZATIONS */
+    /* TABLET */
     @media (min-width: 481px) and (max-width: 768px) {
       .flowers {
-        bottom: 20vh;
-        height: 48vh;
+        bottom: 8vh;
+        height: 68vh;
         max-width: 600px;
-      }
-      .bouquet-wrapper {
-        height: 22vh;
-        max-width: 550px;
-      }
-      .ribbon {
-        height: 42px;
-      }
-      .ribbon-bow {
-        width: 68px;
-        height: 68px;
-      }
-      .ribbon-bow-center {
-        font-size: 32px;
       }
     }
     
-    /* LANDSCAPE MODE */
+    /* LANDSCAPE */
     @media (max-height: 500px) and (orientation: landscape) {
       .flower-title {
         top: 2vh;
@@ -677,11 +598,8 @@
         font-size: clamp(0.9rem, 3.5vw, 1.2rem);
       }
       .flowers {
-        bottom: 12vh;
-        height: 55vh;
-      }
-      .bouquet-wrapper {
-        height: 14vh;
+        bottom: 8vh;
+        height: 75vh;
       }
       .final-message {
         bottom: 1vh;
@@ -697,24 +615,11 @@
       }
     }
     
-    /* VERY SMALL PHONES */
+    /* SMALL PHONES */
     @media (max-width: 360px) {
       .flowers {
-        bottom: 16vh;
-        height: 42vh;
-      }
-      .bouquet-wrapper {
-        height: 18vh;
-      }
-      .ribbon {
-        height: 30px;
-      }
-      .ribbon-bow {
-        width: 48px;
-        height: 48px;
-      }
-      .ribbon-bow-center {
-        font-size: 24px;
+        bottom: 3vh;
+        height: 62vh;
       }
       .final-message {
         padding: 1rem;
@@ -773,7 +678,7 @@
     <button class="next-btn special" onclick="nextPage(5)">See Your Surprise ✨</button>
   </div>
 
-  <!-- Page 5: MOBILE-OPTIMIZED BOUQUET -->
+  <!-- Page 5: HAND-HELD BOUQUET -->
   <div class="page flower-page" id="page5">
     <div class="night"></div>
     
@@ -787,7 +692,7 @@
     
     <div class="bouquet-container" id="bouquetContainer">
       <div class="flowers" id="flowersContainer">
-        <!-- BACK ROW - 3 roses -->
+        <!-- BACK ROW -->
         <div class="flower flower--back-1">
           <div class="flower__leafs flower__leafs--1">
             <div class="flower__leaf flower__leaf--1"></div>
@@ -862,7 +767,7 @@
           </div>
         </div>
 
-        <!-- MIDDLE ROW - 4 roses -->
+        <!-- MIDDLE ROW -->
         <div class="flower flower--mid-1">
           <div class="flower__leafs flower__leafs--1">
             <div class="flower__leaf flower__leaf--1"></div>
@@ -959,7 +864,7 @@
           </div>
         </div>
 
-        <!-- FRONT ROW - 5 roses -->
+        <!-- FRONT ROW -->
         <div class="flower flower--front-1">
           <div class="flower__leafs flower__leafs--2">
             <div class="flower__leaf flower__leaf--1"></div>
@@ -1082,16 +987,6 @@
           </div>
         </div>
       </div>
-
-      <!-- BOUQUET WRAPPER -->
-      <div class="bouquet-wrapper">
-        <div class="paper-wrap"></div>
-        <div class="ribbon">
-          <div class="ribbon-bow">
-            <div class="ribbon-bow-center">💝</div>
-          </div>
-        </div>
-      </div>
     </div>
     
     <div class="final-message" id="finalMessage">
@@ -1130,7 +1025,7 @@
         }, i * 20);
       }
       
-      // Show bouquet on page 5 with delay
+      // Show bouquet on page 5
       if (pageNum === 5 && !bouquetShown) {
         bouquetShown = true;
         setTimeout(showBouquet, 1500);
@@ -1144,7 +1039,7 @@
       
       bouquetContainer.classList.add('show');
       
-      // SPREAD ANIMATION
+      // SPREAD ANIMATION - stems stay together, flowers fan out
       setTimeout(() => {
         flowersContainer.classList.add('spread');
       }, 2000);
