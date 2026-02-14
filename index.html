@@ -208,20 +208,6 @@
       padding: 0 10px;
     }
     
-    .flower-subtitle {
-      font-family: 'Poppins', sans-serif;
-      font-size: clamp(1rem, 4.5vw, 1.4rem);
-      color: rgba(255,255,255,0.9);
-      z-index: 100;
-      position: absolute;
-      top: calc(5vh + 3.5rem);
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      width: 90%;
-      padding: 0 10px;
-    }
-    
     /* MESSAGE APPEARS FIRST - CENTERED */
     .final-message {
       position: fixed;
@@ -648,15 +634,6 @@
       transform: translateY(-50%) rotate(135deg);
     }
     
-    .ribbon-bow-center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 28px;
-      z-index: 10;
-    }
-    
     /* TABLET */
     @media (min-width: 481px) and (max-width: 768px) {
       .flowers {
@@ -675,9 +652,6 @@
         width: 68px;
         height: 68px;
       }
-      .ribbon-bow-center {
-        font-size: 32px;
-      }
     }
     
     /* LANDSCAPE */
@@ -685,10 +659,6 @@
       .flower-title {
         top: 2vh;
         font-size: clamp(1.5rem, 6vw, 2.5rem);
-      }
-      .flower-subtitle {
-        top: calc(2vh + 2.5rem);
-        font-size: clamp(0.9rem, 3.5vw, 1.2rem);
       }
       .flowers {
         bottom: 12vh;
@@ -732,9 +702,6 @@
         width: 48px;
         height: 48px;
       }
-      .ribbon-bow-center {
-        font-size: 24px;
-      }
       .final-message {
         padding: 1.5rem 1.3rem;
       }
@@ -749,7 +716,7 @@
   
   <!-- Page 1 -->
   <div class="page active" id="page1">
-    <div class="page-number">1/5</div>
+    <div class="page-number">1/3</div>
     <div class="photo-frame">
       <img src="photo1.jpg" alt="Our first moment" class="photo">
     </div>
@@ -761,7 +728,7 @@
 
   <!-- Page 2 -->
   <div class="page" id="page2">
-    <div class="page-number">2/5</div>
+    <div class="page-number">2/3</div>
     <div class="photo-frame">
       <img src="photo2.jpg" alt="Our second moment" class="photo">
     </div>
@@ -773,30 +740,18 @@
 
   <!-- Page 3 -->
   <div class="page" id="page3">
-    <div class="page-number">3/5</div>
+    <div class="page-number">3/3</div>
     <div class="photo-frame">
       <img src="photo3.jpg" alt="Our third moment" class="photo">
     </div>
     <div class="message-box">
-      <p class="message">You make me smile even on the hardest days. I'm so grateful for you. 🌟</p>
-    </div>
-    <button class="next-btn" onclick="nextPage(4)">Next →</button>
-  </div>
-
-  <!-- Page 4 -->
-  <div class="page" id="page4">
-    <div class="page-number">4/5</div>
-    <div class="photo-frame">
-      <img src="photo4.jpg" alt="Our fourth moment" class="photo">
-    </div>
-    <div class="message-box">
       <p class="message">I'm so lucky to have you in my life. You mean everything to me. 💖</p>
     </div>
-    <button class="next-btn special" onclick="nextPage(5)">See Your Surprise ✨</button>
+    <button class="next-btn special" onclick="nextPage(4)">See Your Surprise ✨</button>
   </div>
 
-  <!-- Page 5: PINK BOUQUET -->
-  <div class="page flower-page" id="page5">
+  <!-- Page 4: PINK BOUQUET -->
+  <div class="page flower-page" id="page4">
     <div class="night"></div>
     
     <!-- SHOOTING STARS -->
@@ -805,7 +760,6 @@
     <div class="shooting-star shooting-star-3"></div>
     
     <h1 class="flower-title">This is for you...</h1>
-    <p class="flower-subtitle">💐</p>
     
     <!-- MESSAGE APPEARS FIRST (CENTERED) -->
     <div class="final-message" id="finalMessage">
@@ -1116,9 +1070,7 @@
       <div class="bouquet-wrapper">
         <div class="paper-wrap"></div>
         <div class="ribbon">
-          <div class="ribbon-bow">
-            <div class="ribbon-bow-center">💝</div>
-          </div>
+          <div class="ribbon-bow"></div>
         </div>
       </div>
     </div>
@@ -1152,8 +1104,8 @@
         }, i * 20);
       }
       
-      // Show message FIRST on page 5
-      if (pageNum === 5 && !bouquetShown) {
+      // Show message FIRST on page 4
+      if (pageNum === 4 && !bouquetShown) {
         bouquetShown = true;
         setTimeout(showMessage, 800);
       }
