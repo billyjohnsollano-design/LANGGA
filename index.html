@@ -6,18 +6,22 @@
   <title>For You ❤️</title>
   <link rel="stylesheet" href="main.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap');
     
     * {
       -webkit-tap-highlight-color: transparent;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
     
     body {
       overflow: hidden;
       touch-action: none;
+      font-family: 'Poppins', sans-serif;
     }
     
-    /* Page transition system */
+    /* ENHANCED PAGE BACKGROUNDS */
     .page {
       position: fixed;
       inset: 0;
@@ -25,13 +29,57 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
-      gap: 1.5rem;
+      padding: 2rem 1.5rem;
+      gap: 2rem;
       opacity: 0;
       transform: translateX(100%) scale(0.95);
       transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       z-index: 10;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* ANIMATED GRADIENT BACKGROUNDS */
+    #page1 {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      background-size: 200% 200%;
+      animation: gradientShift 8s ease infinite;
+    }
+    
+    #page2 {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #ff6b9d 100%);
+      background-size: 200% 200%;
+      animation: gradientShift 10s ease infinite;
+    }
+    
+    #page3 {
+      background: linear-gradient(135deg, #ff6b9d 0%, #c44569 50%, #8e44ad 100%);
+      background-size: 200% 200%;
+      animation: gradientShift 12s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    /* FLOATING PARTICLES BACKGROUND */
+    .page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08) 0%, transparent 60%);
+      animation: particleFloat 15s ease-in-out infinite;
+      pointer-events: none;
+    }
+    
+    @keyframes particleFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -30px) scale(1.1); }
+      66% { transform: translate(-30px, 30px) scale(0.9); }
     }
     
     .page.active {
@@ -44,78 +92,232 @@
       transform: translateX(-100%) scale(0.95);
     }
     
+    /* ENHANCED PAGE NUMBER */
     .page-number {
       position: absolute;
-      top: 15px;
-      left: 15px;
-      color: rgba(255,255,255,0.7);
+      top: 20px;
+      left: 20px;
+      color: rgba(255,255,255,0.9);
       font-family: 'Poppins', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
+      font-size: 1rem;
+      font-weight: 700;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      border: 2px solid rgba(255,255,255,0.3);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      z-index: 100;
     }
     
+    /* ENHANCED PHOTO FRAME */
     .photo-frame {
-      width: min(85vw, 400px);
-      height: min(85vw, 400px);
-      border-radius: 20px;
+      width: min(88vw, 420px);
+      height: min(88vw, 420px);
+      border-radius: 25px;
       overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-      border: 4px solid rgba(255,255,255,0.3);
-      animation: float 4s ease-in-out infinite;
+      box-shadow: 
+        0 25px 70px rgba(0,0,0,0.5),
+        0 10px 30px rgba(0,0,0,0.3),
+        inset 0 0 0 1px rgba(255,255,255,0.2);
+      border: 5px solid rgba(255,255,255,0.4);
+      animation: photoFloat 5s ease-in-out infinite;
       position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease;
     }
     
+    .photo-frame:active {
+      transform: scale(0.98);
+    }
+    
+    /* GLOWING BORDER ANIMATION */
     .photo-frame::before {
       content: '';
       position: absolute;
-      inset: -8px;
-      background: linear-gradient(45deg, #ff6b9d, #c44569, #8e44ad);
-      background-size: 300% 300%;
-      animation: borderGlow 3s ease infinite;
-      border-radius: 20px;
+      inset: -10px;
+      background: linear-gradient(45deg, 
+        #ff6b9d, 
+        #f5576c, 
+        #c44569, 
+        #8e44ad,
+        #667eea,
+        #f093fb,
+        #ff6b9d
+      );
+      background-size: 400% 400%;
+      animation: borderGlow 4s ease infinite;
+      border-radius: 30px;
       z-index: -1;
-      filter: blur(15px);
-      opacity: 0.8;
+      filter: blur(20px);
+      opacity: 0.9;
+    }
+    
+    /* SHIMMER EFFECT */
+    .photo-frame::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255,255,255,0.3) 50%,
+        transparent 70%
+      );
+      animation: shimmer 3s infinite;
+      pointer-events: none;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
     }
     
     .photo {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 0.5s ease;
     }
     
+    .photo-frame:hover .photo {
+      transform: scale(1.05);
+    }
+    
+    /* ENHANCED MESSAGE BOX */
     .message-box {
-      max-width: 90%;
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(20px);
-      border-radius: 18px;
-      padding: 1.5rem;
-      border: 2px solid rgba(255,255,255,0.3);
+      max-width: min(90%, 450px);
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(25px);
+      border-radius: 25px;
+      padding: 2rem 2rem;
+      border: 2px solid rgba(255,255,255,0.4);
+      box-shadow: 
+        0 15px 40px rgba(0,0,0,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.3);
+      position: relative;
+      animation: messageSlideUp 0.8s ease-out 0.5s both;
+    }
+    
+    @keyframes messageSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* DECORATIVE CORNERS */
+    .message-box::before,
+    .message-box::after {
+      content: '✨';
+      position: absolute;
+      font-size: 1.5rem;
+      animation: sparkle 2s ease-in-out infinite;
+    }
+    
+    .message-box::before {
+      top: -10px;
+      left: -10px;
+    }
+    
+    .message-box::after {
+      bottom: -10px;
+      right: -10px;
+      animation-delay: 1s;
+    }
+    
+    @keyframes sparkle {
+      0%, 100% { 
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
+      50% { 
+        opacity: 0.5;
+        transform: scale(1.2) rotate(180deg);
+      }
     }
     
     .message {
       font-family: 'Poppins', sans-serif;
-      font-size: clamp(1.1rem, 4.5vw, 1.5rem);
+      font-size: clamp(1.15rem, 4.8vw, 1.6rem);
       color: white;
       text-align: center;
-      line-height: 1.6;
-      text-shadow: 0 3px 15px rgba(0,0,0,0.5);
+      line-height: 1.8;
+      text-shadow: 
+        0 2px 10px rgba(0,0,0,0.4),
+        0 0 20px rgba(255,255,255,0.2);
+      font-weight: 400;
+      letter-spacing: 0.3px;
     }
     
+    /* ENHANCED BUTTON */
     .next-btn {
-      background: linear-gradient(45deg, #ff6b9d, #c44569);
+      background: linear-gradient(135deg, #ff6b9d 0%, #f5576c 50%, #c44569 100%);
+      background-size: 200% 200%;
       color: white;
       border: none;
-      padding: 1.1rem 2.5rem;
-      border-radius: 50px;
-      font-size: 1.15rem;
+      padding: 1.3rem 3rem;
+      border-radius: 60px;
+      font-size: 1.2rem;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 10px 30px rgba(255,107,157,0.5);
-      transition: all 0.3s;
+      box-shadow: 
+        0 15px 35px rgba(255,107,157,0.5),
+        0 5px 15px rgba(0,0,0,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.3);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       font-family: 'Poppins', sans-serif;
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
+      position: relative;
+      overflow: hidden;
+      animation: buttonGlow 2s ease-in-out infinite;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-size: 1rem;
+    }
+    
+    @keyframes buttonGlow {
+      0%, 100% { 
+        background-position: 0% 50%;
+        box-shadow: 
+          0 15px 35px rgba(255,107,157,0.5),
+          0 5px 15px rgba(0,0,0,0.3),
+          inset 0 1px 0 rgba(255,255,255,0.3);
+      }
+      50% { 
+        background-position: 100% 50%;
+        box-shadow: 
+          0 18px 45px rgba(255,107,157,0.7),
+          0 8px 20px rgba(0,0,0,0.4),
+          inset 0 1px 0 rgba(255,255,255,0.4);
+      }
+    }
+    
+    /* BUTTON RIPPLE EFFECT */
+    .next-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    
+    .next-btn:active::before {
+      width: 300px;
+      height: 300px;
     }
     
     .next-btn:active {
@@ -123,11 +325,38 @@
     }
     
     .next-btn.special {
-      background: linear-gradient(45deg, #f093fb, #f5576c);
-      animation: pulse 2s ease-in-out infinite;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #ff6b9d 100%);
+      background-size: 200% 200%;
+      animation: pulse 2s ease-in-out infinite, buttonGlow 2s ease-in-out infinite;
+      box-shadow: 
+        0 20px 50px rgba(240,147,251,0.6),
+        0 10px 25px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.4);
     }
     
-    /* Flower page styling */
+    @keyframes photoFloat {
+      0%, 100% { 
+        transform: translateY(0px) rotateZ(0deg);
+      }
+      25% { 
+        transform: translateY(-10px) rotateZ(0.5deg);
+      }
+      75% { 
+        transform: translateY(-10px) rotateZ(-0.5deg);
+      }
+    }
+    
+    @keyframes borderGlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    /* Flower page styling - DON'T TOUCH */
     .flower-page {
       background: var(--dark-color) !important;
       overflow: hidden !important;
@@ -267,21 +496,6 @@
       font-size: clamp(1.2rem, 5vw, 1.6rem) !important;
       margin-top: 1rem !important;
       font-weight: 600 !important;
-    }
-    
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-15px); }
-    }
-    
-    @keyframes borderGlow {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-    
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
     }
     
     @keyframes titlePulse {
@@ -684,6 +898,15 @@
         font-size: clamp(0.9rem, 3.5vw, 1.1rem);
         margin-bottom: 0.4rem;
       }
+      
+      .photo-frame {
+        width: min(70vw, 350px);
+        height: min(70vw, 350px);
+      }
+      
+      .message-box {
+        padding: 1.3rem 1.5rem;
+      }
     }
     
     /* SMALL PHONES */
@@ -707,6 +930,20 @@
       }
       .final-message.move-bottom {
         padding: 1rem 1.2rem;
+      }
+      
+      .photo-frame {
+        width: min(85vw, 360px);
+        height: min(85vw, 360px);
+      }
+      
+      .message-box {
+        padding: 1.5rem 1.5rem;
+      }
+      
+      .next-btn {
+        padding: 1.1rem 2.5rem;
+        font-size: 0.95rem;
       }
     }
   </style>
