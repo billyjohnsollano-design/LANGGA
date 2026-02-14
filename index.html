@@ -222,18 +222,19 @@
       padding: 0 10px;
     }
     
+    /* MESSAGE APPEARS FIRST - CENTERED */
     .final-message {
       position: fixed;
-      bottom: 2vh;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%) translateY(30px);
+      transform: translate(-50%, -50%) translateY(30px);
       text-align: center;
       max-width: 92%;
       width: 100%;
       opacity: 0;
-      transition: all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: all 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       z-index: 100;
-      padding: 1.2rem 1.3rem;
+      padding: 1.5rem 1.5rem;
       background: rgba(0,0,0,0.9);
       backdrop-filter: blur(15px);
       border-radius: 18px;
@@ -243,30 +244,38 @@
     
     .final-message.show {
       opacity: 1;
-      transform: translateX(-50%) translateY(0);
+      transform: translate(-50%, -50%) translateY(0);
+    }
+    
+    /* MESSAGE MOVES TO BOTTOM AFTER FLOWERS APPEAR */
+    .final-message.move-bottom {
+      top: auto;
+      bottom: 2vh;
+      transform: translateX(-50%);
+      padding: 1.2rem 1.3rem;
     }
     
     .final-message h2 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1.3rem, 5.5vw, 2rem);
+      font-size: clamp(1.4rem, 5.8vw, 2.2rem);
       color: #ff69b4;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.7rem;
       text-shadow: 0 0 20px rgba(255,105,180,0.8);
     }
     
     .final-message p {
       font-family: 'Poppins', sans-serif;
-      font-size: clamp(0.95rem, 4vw, 1.15rem);
+      font-size: clamp(1rem, 4.2vw, 1.2rem);
       color: rgba(255,255,255,0.95);
-      line-height: 1.5;
-      margin-bottom: 0.4rem;
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
     }
     
     .signature {
       font-style: italic;
       color: #ff69b4 !important;
-      font-size: clamp(1.1rem, 4.5vw, 1.4rem) !important;
-      margin-top: 0.6rem !important;
+      font-size: clamp(1.15rem, 4.8vw, 1.5rem) !important;
+      margin-top: 0.7rem !important;
     }
     
     @keyframes float {
@@ -308,7 +317,7 @@
     
     .bouquet-container.show {
       display: block;
-      animation: bouquet-glow 2s ease-out 6.5s forwards;
+      animation: bouquet-glow 2s ease-out 1s forwards;
     }
     
     @keyframes bouquet-glow {
@@ -451,7 +460,7 @@
       z-index: 3;
     }
     
-    /* PINK ROSES - HOT PINK TO LIGHT PINK GRADIENT */
+    /* PINK ROSES */
     .flower__leaf {
       background-color: #ff69b4 !important;
       background-image: linear-gradient(to top, #ff1493, #ff69b4, #ffb6d9, #ffc9e3) !important;
@@ -474,7 +483,7 @@
       box-shadow: inset 0 0 3px rgba(0,0,0,0.5), 0 0 10px rgba(45,122,45,0.4) !important;
     }
     
-    /* MOBILE-OPTIMIZED SPARKLES */
+    /* SPARKLES */
     .flower__light {
       width: 2.5vmin !important;
       height: 2.5vmin !important;
@@ -490,7 +499,7 @@
       background-color: #ffeb3b !important;
     }
     
-    /* MOBILE WRAPPER */
+    /* WRAPPER */
     .bouquet-wrapper {
       position: absolute;
       bottom: 0;
@@ -500,7 +509,7 @@
       max-width: 450px;
       height: 20vh;
       opacity: 0;
-      animation: show-wrapper 1s ease-out 5s forwards;
+      animation: show-wrapper 1s ease-out 0.5s forwards;
       z-index: 5;
     }
     
@@ -683,7 +692,7 @@
       .bouquet-wrapper {
         height: 14vh;
       }
-      .final-message {
+      .final-message.move-bottom {
         bottom: 1vh;
         padding: 0.8rem 1rem;
       }
@@ -717,6 +726,9 @@
         font-size: 24px;
       }
       .final-message {
+        padding: 1.2rem;
+      }
+      .final-message.move-bottom {
         padding: 1rem;
       }
     }
@@ -785,9 +797,17 @@
     <h1 class="flower-title">This is for you...</h1>
     <p class="flower-subtitle">Your eternal bouquet 💐</p>
     
+    <!-- MESSAGE APPEARS FIRST (CENTERED) -->
+    <div class="final-message" id="finalMessage">
+      <h2>This bouquet will never wilt...</h2>
+      <p>Just like my love for you will never fade.</p>
+      <p class="signature">Happy Valentine's Day, my love ❤️</p>
+      <p>I wish I could buy you a real bouquet, but I hope this one stays in your heart forever 💐</p>
+    </div>
+    
     <div class="bouquet-container" id="bouquetContainer">
       <div class="flowers" id="flowersContainer">
-        <!-- BACK ROW - 3 roses -->
+        <!-- BACK ROW -->
         <div class="flower flower--back-1">
           <div class="flower__leafs flower__leafs--1">
             <div class="flower__leaf flower__leaf--1"></div>
@@ -862,7 +882,7 @@
           </div>
         </div>
 
-        <!-- MIDDLE ROW - 4 roses -->
+        <!-- MIDDLE ROW -->
         <div class="flower flower--mid-1">
           <div class="flower__leafs flower__leafs--1">
             <div class="flower__leaf flower__leaf--1"></div>
@@ -959,7 +979,7 @@
           </div>
         </div>
 
-        <!-- FRONT ROW - 5 roses -->
+        <!-- FRONT ROW -->
         <div class="flower flower--front-1">
           <div class="flower__leafs flower__leafs--2">
             <div class="flower__leaf flower__leaf--1"></div>
@@ -1083,7 +1103,7 @@
         </div>
       </div>
 
-      <!-- BOUQUET WRAPPER -->
+      <!-- WRAPPER -->
       <div class="bouquet-wrapper">
         <div class="paper-wrap"></div>
         <div class="ribbon">
@@ -1092,13 +1112,6 @@
           </div>
         </div>
       </div>
-    </div>
-    
-    <div class="final-message" id="finalMessage">
-      <h2>This bouquet will never wilt...</h2>
-      <p>Just like my love for you will never fade.</p>
-      <p class="signature">Happy Valentine's Day, my love ❤️</p>
-      <p>I wish I could buy you a real bouquet, but I hope this one stays in your heart forever 💐</p>
     </div>
   </div>
 
@@ -1130,11 +1143,21 @@
         }, i * 20);
       }
       
-      // Show bouquet on page 5
+      // Show message FIRST on page 5
       if (pageNum === 5 && !bouquetShown) {
         bouquetShown = true;
-        setTimeout(showBouquet, 1500);
+        setTimeout(showMessage, 800);
       }
+    }
+
+    function showMessage() {
+      const finalMessage = document.getElementById('finalMessage');
+      
+      // Show message centered
+      finalMessage.classList.add('show');
+      
+      // After 4 seconds, show flowers and move message to bottom
+      setTimeout(showBouquet, 4000);
     }
 
     function showBouquet() {
@@ -1142,9 +1165,13 @@
       const flowersContainer = document.getElementById('flowersContainer');
       const finalMessage = document.getElementById('finalMessage');
       
+      // Move message to bottom
+      finalMessage.classList.add('move-bottom');
+      
+      // Show bouquet
       bouquetContainer.classList.add('show');
       
-      // SPREAD ANIMATION
+      // SPREAD flowers after 2 seconds
       setTimeout(() => {
         flowersContainer.classList.add('spread');
       }, 2000);
@@ -1159,11 +1186,6 @@
           );
         }, i * 20);
       }
-      
-      // Show final message
-      setTimeout(() => {
-        finalMessage.classList.add('show');
-      }, 10000);
     }
 
     // Prevent right-click
