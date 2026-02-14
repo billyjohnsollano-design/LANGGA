@@ -295,7 +295,7 @@
       }
     }
     
-    /* HAND-HELD BOUQUET - STEMS TOGETHER AT BOTTOM */
+    /* ALL STEMS GO TO ONE POINT AT BOTTOM CENTER */
     .bouquet-container {
       position: absolute;
       bottom: 0;
@@ -331,212 +331,138 @@
       display: none !important;
     }
     
-    /* STEMS CONVERGE AT BOTTOM - FLOWERS SPREAD AT TOP */
+    /* HAND POSITION - BOTTOM CENTER */
+    .hand-point {
+      position: absolute;
+      bottom: 3vh;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      z-index: 1000;
+    }
+    
+    /* FLOWERS CONTAINER */
     .flowers {
       position: absolute;
-      bottom: 5vh;
+      bottom: 3vh;
       left: 50%;
       transform: translateX(-50%);
-      width: 95vw;
-      height: 65vh;
-      max-width: 500px;
+      width: 100%;
+      height: 70vh;
     }
     
     .flower {
       position: absolute;
-      transition: all 0.8s ease-out;
-    }
-    
-    /* ALL STEMS START AT SAME POINT (BOTTOM CENTER) */
-    .flowers:not(.spread) .flower {
-      left: 50% !important;
-      bottom: 0 !important;
-      transform: translateX(-50%) scale(0.5) !important;
-    }
-    
-    /* SPREAD ANIMATION - STEMS STAY TOGETHER, FLOWERS FAN OUT */
-    .flowers.spread .flower {
-      animation: spread-open 1.5s ease-out forwards;
-    }
-    
-    @keyframes spread-open {
-      from {
-        left: 50%;
-        bottom: 0;
-        transform: translateX(-50%) scale(0.5);
-      }
-    }
-    
-    /* STEMS POINT TO BOTTOM CENTER - FLOWERS SPREAD LIKE FAN */
-    /* BACK ROW - highest/longest stems */
-    .flower--back-1 {
       left: 50%;
       bottom: 0;
-      transform: translateX(-50%) scale(0.65) rotate(0deg);
-      transform-origin: bottom center;
+      transition: all 1s ease-out;
+    }
+    
+    /* ALL FLOWERS START AT BOTTOM CENTER */
+    .flowers:not(.spread) .flower {
+      transform: translateX(-50%) scale(0.3) !important;
+    }
+    
+    /* WHEN SPREAD - FLOWERS MOVE UP BUT STEMS STAY AT BOTTOM */
+    /* The stem (flower__line) stays anchored at bottom:0, flowers fan out at top */
+    
+    /* BACK ROW - Tallest */
+    .flower--back-1 {
       z-index: 1;
     }
     
     .flowers.spread .flower--back-1 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) translateY(-45vh) scale(0.65);
+      transform: translateX(-50%) translateY(-50vh) scale(0.65);
     }
     
     .flower--back-2 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) scale(0.6) rotate(-15deg);
-      transform-origin: bottom center;
       z-index: 1;
     }
     
     .flowers.spread .flower--back-2 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) translateX(-30vw) translateY(-40vh) scale(0.6) rotate(-15deg);
+      transform: translateX(calc(-50% - 28vw)) translateY(-46vh) scale(0.6) rotate(-12deg);
     }
     
     .flower--back-3 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) scale(0.6) rotate(15deg);
-      transform-origin: bottom center;
       z-index: 1;
     }
     
     .flowers.spread .flower--back-3 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) translateX(30vw) translateY(-40vh) scale(0.6) rotate(15deg);
+      transform: translateX(calc(-50% + 28vw)) translateY(-46vh) scale(0.6) rotate(12deg);
     }
     
-    /* MIDDLE ROW - medium stems */
+    /* MIDDLE ROW */
     .flower--mid-1 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) scale(0.7) rotate(-12deg);
-      transform-origin: bottom center;
       z-index: 2;
     }
     
     .flowers.spread .flower--mid-1 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) translateX(-38vw) translateY(-35vh) scale(0.7) rotate(-12deg);
+      transform: translateX(calc(-50% - 36vw)) translateY(-42vh) scale(0.68) rotate(-10deg);
     }
     
     .flower--mid-2 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) scale(0.72) rotate(-6deg);
-      transform-origin: bottom center;
       z-index: 2;
     }
     
     .flowers.spread .flower--mid-2 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) translateX(-18vw) translateY(-38vh) scale(0.72) rotate(-6deg);
+      transform: translateX(calc(-50% - 16vw)) translateY(-45vh) scale(0.7) rotate(-5deg);
     }
     
     .flower--mid-3 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) scale(0.72) rotate(6deg);
-      transform-origin: bottom center;
       z-index: 2;
     }
     
     .flowers.spread .flower--mid-3 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) translateX(18vw) translateY(-38vh) scale(0.72) rotate(6deg);
+      transform: translateX(calc(-50% + 16vw)) translateY(-45vh) scale(0.7) rotate(5deg);
     }
     
     .flower--mid-4 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) scale(0.7) rotate(12deg);
-      transform-origin: bottom center;
       z-index: 2;
     }
     
     .flowers.spread .flower--mid-4 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) translateX(38vw) translateY(-35vh) scale(0.7) rotate(12deg);
+      transform: translateX(calc(-50% + 36vw)) translateY(-42vh) scale(0.68) rotate(10deg);
     }
     
-    /* FRONT ROW - shorter stems, closest */
+    /* FRONT ROW - Closest */
     .flower--front-1 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) scale(0.78) rotate(-18deg);
-      transform-origin: bottom center;
       z-index: 3;
     }
     
     .flowers.spread .flower--front-1 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) translateX(-42vw) translateY(-28vh) scale(0.78) rotate(-18deg);
+      transform: translateX(calc(-50% - 40vw)) translateY(-36vh) scale(0.75) rotate(-15deg);
     }
     
     .flower--front-2 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) scale(0.82) rotate(-8deg);
-      transform-origin: bottom center;
       z-index: 3;
     }
     
     .flowers.spread .flower--front-2 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) translateX(-20vw) translateY(-32vh) scale(0.82) rotate(-8deg);
+      transform: translateX(calc(-50% - 18vw)) translateY(-40vh) scale(0.78) rotate(-7deg);
     }
     
     .flower--front-3 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) scale(0.85);
-      transform-origin: bottom center;
       z-index: 3;
     }
     
     .flowers.spread .flower--front-3 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) translateY(-35vh) scale(0.85);
+      transform: translateX(-50%) translateY(-42vh) scale(0.8);
     }
     
     .flower--front-4 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) scale(0.82) rotate(8deg);
-      transform-origin: bottom center;
       z-index: 3;
     }
     
     .flowers.spread .flower--front-4 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) translateX(20vw) translateY(-32vh) scale(0.82) rotate(8deg);
+      transform: translateX(calc(-50% + 18vw)) translateY(-40vh) scale(0.78) rotate(7deg);
     }
     
     .flower--front-5 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) scale(0.78) rotate(18deg);
-      transform-origin: bottom center;
       z-index: 3;
     }
     
     .flowers.spread .flower--front-5 {
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%) translateX(42vw) translateY(-28vh) scale(0.78) rotate(18deg);
+      transform: translateX(calc(-50% + 40vw)) translateY(-36vh) scale(0.75) rotate(15deg);
     }
     
     /* ROSE COLORS */
@@ -581,9 +507,8 @@
     /* TABLET */
     @media (min-width: 481px) and (max-width: 768px) {
       .flowers {
-        bottom: 8vh;
-        height: 68vh;
-        max-width: 600px;
+        bottom: 5vh;
+        height: 72vh;
       }
     }
     
@@ -598,8 +523,8 @@
         font-size: clamp(0.9rem, 3.5vw, 1.2rem);
       }
       .flowers {
-        bottom: 8vh;
-        height: 75vh;
+        bottom: 5vh;
+        height: 78vh;
       }
       .final-message {
         bottom: 1vh;
@@ -618,8 +543,8 @@
     /* SMALL PHONES */
     @media (max-width: 360px) {
       .flowers {
-        bottom: 3vh;
-        height: 62vh;
+        bottom: 2vh;
+        height: 68vh;
       }
       .final-message {
         padding: 1rem;
@@ -1039,7 +964,7 @@
       
       bouquetContainer.classList.add('show');
       
-      // SPREAD ANIMATION - stems stay together, flowers fan out
+      // SPREAD - flowers fan out but stems stay at bottom
       setTimeout(() => {
         flowersContainer.classList.add('spread');
       }, 2000);
